@@ -10,11 +10,11 @@ import { useForm, Controller } from 'react-hook-form';
 import { VisitaContext } from '../../context/VisitaContext';
 import { FormValues } from '../../interfaces/visita';
 import { validateVisita } from '../../schema/formSchema';
-import { VisitaStackParams } from '../../navigation/VisitaNavigator';
+import { VisitaStackParamList } from '../../navigation/Root';
 
-interface Props extends StackScreenProps<VisitaStackParams, 'UpdateInsertVisita'> {}
+interface Props extends StackScreenProps<VisitaStackParamList, 'UpdateSave'> {}
 
-export const UpdateInsertVisita = ({ navigation, route }: Props) => {
+export const UpdateSave = ({ navigation, route }: Props) => {
   const { id = '' } = route.params;
   const [tipo, setTipo] = useState('tiempo_no_visita');
   const { insertVisita, updateVisita, loadById } = useContext(VisitaContext);
@@ -86,13 +86,7 @@ export const UpdateInsertVisita = ({ navigation, route }: Props) => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <>
-                <TextInput
-                  mode="outlined"
-                  label="Nombre"
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                />
+                <TextInput mode="outlined" label="Nombre" onBlur={onBlur} onChangeText={onChange} value={value} />
                 <HelperText type="error" visible={errors.nombre ? true : false}>
                   {errors.nombre?.message}
                 </HelperText>
@@ -107,13 +101,7 @@ export const UpdateInsertVisita = ({ navigation, route }: Props) => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <>
-                <TextInput
-                  mode="outlined"
-                  label="Dirección"
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                />
+                <TextInput mode="outlined" label="Dirección" onBlur={onBlur} onChangeText={onChange} value={value} />
                 <HelperText type="error" visible={errors.direccion ? true : false}>
                   {errors.direccion?.message}
                 </HelperText>
@@ -137,15 +125,7 @@ export const UpdateInsertVisita = ({ navigation, route }: Props) => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <>
-                <TextInput
-                  multiline
-                  numberOfLines={4}
-                  mode="outlined"
-                  label="Observaciones"
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                />
+                <TextInput multiline numberOfLines={4} mode="outlined" label="Observaciones" onBlur={onBlur} onChangeText={onChange} value={value} />
                 <HelperText type="error" visible={errors.observacion ? true : false}>
                   {errors.observacion?.message}
                 </HelperText>
@@ -153,12 +133,7 @@ export const UpdateInsertVisita = ({ navigation, route }: Props) => {
             )}
             name="observacion"
           />
-          <Button
-            icon="plus"
-            mode="contained"
-            style={{ margin: 5 }}
-            onPress={handleSubmit(saveOrUpdate)}
-          >
+          <Button icon="plus" mode="contained" style={{ margin: 5 }} onPress={handleSubmit(saveOrUpdate)}>
             Guardar
           </Button>
         </View>

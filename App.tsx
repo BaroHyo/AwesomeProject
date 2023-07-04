@@ -1,19 +1,27 @@
 import React from 'react';
-import {
-  MD3LightTheme as DefaultTheme,
-  PaperProvider,
-} from 'react-native-paper';
+import { MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
-import { PermissionsProvider } from './src/context/PermissionsContext';
-import { RootNavigator } from './src/navigation/RootNavigator';
-import { VisitaProvider } from './src/context/VisitaContext';
+import Root from './src/navigation/Root';
 import { ChildrenProps } from './src/interfaces/app';
+import {
+  AuthProvider,
+  ClienteProvider,
+  PermissionsProvider,
+  ProductoProvider,
+  VisitaProvider,
+} from './src/context';
 
 const AppState = ({ children }: ChildrenProps) => {
   return (
-    <PermissionsProvider>
-      <VisitaProvider>{children}</VisitaProvider>
-    </PermissionsProvider>
+    <AuthProvider>
+      <PermissionsProvider>
+        <VisitaProvider>
+          <ProductoProvider>
+            <ClienteProvider>{children}</ClienteProvider>
+          </ProductoProvider>
+        </VisitaProvider>
+      </PermissionsProvider>
+    </AuthProvider>
   );
 };
 
@@ -31,7 +39,7 @@ function App() {
     <PaperProvider theme={theme}>
       <NavigationContainer>
         <AppState>
-          <RootNavigator />
+          <Root />
         </AppState>
       </NavigationContainer>
     </PaperProvider>

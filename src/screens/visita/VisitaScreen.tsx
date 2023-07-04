@@ -8,14 +8,14 @@ import {
 } from 'react-native';
 import { Divider, FAB, List, Portal, Text } from 'react-native-paper';
 import { StackScreenProps } from '@react-navigation/stack';
-import { VisitaStackParams } from '../../navigation/VisitaNavigator';
 import { VisitaContext } from '../../context/VisitaContext';
 import MapView, { Marker } from 'react-native-maps';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MyMessageBox } from '../../components';
+import { VisitaStackParamList } from '../../navigation/Root';
 
-interface Props extends StackScreenProps<VisitaStackParams, 'VisitaScreen'> {}
+interface Props extends StackScreenProps<VisitaStackParamList, 'VisitaScreen'> {}
 
 export const VisitaScreen = ({ navigation, route }: Props) => {
   const {
@@ -133,7 +133,7 @@ export const VisitaScreen = ({ navigation, route }: Props) => {
             {
               icon: 'pencil',
               label: 'Editar',
-              onPress: () => navigation.navigate('UpdateInsertVisita', { id }),
+              onPress: () => navigation.navigate('UpdateSave', { id }),
             },
           ]}
           onStateChange={onStateChange}

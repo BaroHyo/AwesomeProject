@@ -1,20 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView, FlatList, RefreshControl } from 'react-native';
-import {
-  Divider,
-  IconButton,
-  List,
-  Paragraph,
-  useTheme,
-} from 'react-native-paper';
+import { Divider, IconButton, List, Paragraph, useTheme } from 'react-native-paper';
 import { StackScreenProps } from '@react-navigation/stack';
 import { format } from 'date-fns';
 
 //componetes
 import { VisitaContext } from '../../context/VisitaContext';
-import { VisitaStackParams } from '../../navigation/VisitaNavigator';
+import { VisitaStackParamList } from '../../navigation/Root';
 
-interface Props extends StackScreenProps<VisitaStackParams, 'VisitasScreen'> {}
+interface Props extends StackScreenProps<VisitaStackParamList, 'VisitasScreen'> {}
 
 export const VisitasScreen = ({ navigation }: Props) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -31,7 +25,7 @@ export const VisitasScreen = ({ navigation }: Props) => {
           style={{ marginRight: 10 }}
           iconColor={theme.colors.primary}
           size={30}
-          onPress={() => navigation.navigate('UpdateInsertVisita', {})}
+          onPress={() => navigation.navigate('UpdateSave', {})}
         />
       ),
     });
@@ -56,9 +50,7 @@ export const VisitasScreen = ({ navigation }: Props) => {
           <List.Item
             title={item.nombre}
             description={item.direccion}
-            right={() => (
-              <Paragraph>{format(item.fecha, 'MM/dd/yyyy')}</Paragraph>
-            )}
+            right={() => <Paragraph>{format(item.fecha, 'MM/dd/yyyy')}</Paragraph>}
             onPress={() =>
               navigation.navigate('VisitaScreen', {
                 id: item.id,
@@ -74,15 +66,8 @@ export const VisitasScreen = ({ navigation }: Props) => {
             }
           />
         )}
-        ItemSeparatorComponent={() => (
-          <Divider style={{ backgroundColor: theme.colors.primary }} bold />
-        )}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefreshing}
-            onRefresh={loadVisitaFromBackend}
-          />
-        }
+        ItemSeparatorComponent={() => <Divider style={{ backgroundColor: theme.colors.primary }} bold />}
+        refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={loadVisitaFromBackend} />}
       />
     </SafeAreaView>
   );
