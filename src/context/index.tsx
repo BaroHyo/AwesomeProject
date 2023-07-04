@@ -1,3 +1,4 @@
+export * from './PreferencesContext ';
 export * from './AuthContext';
 export * from './ClienteContext';
 export * from './PermissionsContext';

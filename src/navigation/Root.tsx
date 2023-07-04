@@ -5,6 +5,8 @@ import { LoadingScreen } from '../screens';
 import { PermissionsScreen } from '../screens/permiso';
 import { UpdateSave, VisitaScreen, VisitasScreen } from '../screens/visita';
 import { ClienteModal, ClienteScreen, ClientesScreen } from '../screens/cliente';
+import { AuthScreen } from '../screens/auth';
+import { AuthContext } from '../context';
 
 export type VisitaStackParamList = {
   VisitasScreen: undefined;
@@ -34,12 +36,31 @@ export type ClienteStackParamList = {
   ClienteModal: undefined;
 };
 
-type RootStackParamList = VisitaStackParamList & HomeStackParamList & ClienteStackParamList;
+export type AuthStackParamList = {
+  AuthScreen: undefined;
+};
+
+type RootStackParamList = VisitaStackParamList &
+  HomeStackParamList &
+  ClienteStackParamList &
+  AuthStackParamList;
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 export default function Root() {
-  return <HomeStack />;
+  const { status } = useContext(AuthContext);
+
+  if (status === 'checking') return <LoadingScreen />;
+
+  return <>{status !== 'authenticated' ? <AuthStack /> : <HomeStack />}</>;
+}
+
+function AuthStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="AuthScreen" component={AuthScreen} />
+    </Stack.Navigator>
+  );
 }
 
 function HomeStack() {
